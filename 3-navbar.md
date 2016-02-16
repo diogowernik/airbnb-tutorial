@@ -1,0 +1,86 @@
+rails g controller Pages home
+
+
+**app/views/layouts/application.html.erb**
+
+```ruby
+    <%= render 'shared/navbar' %>
+    
+    <%= render 'shared/message' %>
+    
+    <div class="container">
+    	<%= yield %>	
+    </div>
+
+```
+
+Create folder
+
+**app/views/shared**
+
+add
+
+**_message.html.erb**
+
+```ruby
+<% unless flash.empty? %>
+	<script type="text/javascript">
+		<% flash.each do |f| %>
+			<% type = f[0].to_s.gsub('alert','error').gsub('notice','info') %>
+			toastr['<%= type %>']('<%= f[1] %>')
+		<% end %>
+	</script>
+<% end %>
+```
+
+**_navbar.html.erb**
+
+```ruby
+<!-- Static navbar -->
+<nav class="navbar navbar-default navbar-static-top">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#">Air Alien</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav navbar-right">
+
+      	<% if(!user_signed_in?) %>
+      		<li><%= link_to "Log In", new_user_session_path %></li>
+      		<li><%= link_to "Sign Up", new_user_registration_path %></li>
+    		<% else %>
+    			 <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+            <%= current_user.email %>
+            <span class="caret"></span>
+
+          </a>
+          <ul class="dropdown-menu">
+            <li><a href="#">Your Trips</a></li>
+            <li><a href="#">Wish List</a></li>
+      			<li><%= link_to "Edit Profile", edit_user_registration_path %></li>
+            <li role="separator" class="divider"></li>
+            <li><a href="#">Account Setting</a></li>
+      			<li><%= link_to "Log out", destroy_user_session_path, method: :delete %></li>
+          </ul>
+        </li>
+      	<% end %>
+
+        <li>
+          <a href="#"><i class="fa fa-envelope-o"></i> Messages</a>
+        </li>
+         <li>
+          <a href="#"><i class="fa fa-home fa-lg"></i> Become a Host</a>
+        </li>
+      </ul>
+
+    </div><!--/.nav-collapse -->
+  </div>
+</nav>
+```
