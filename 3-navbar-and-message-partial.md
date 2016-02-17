@@ -4,14 +4,13 @@ rails g controller Pages home
 **app/views/layouts/application.html.erb**
 
 ```ruby
-    <%= render 'shared/navbar' %>
-    
-    <%= render 'shared/message' %>
-    
-    <div class="container">
-    	<%= yield %>	
-    </div>
+<%= render 'shared/navbar' %>
 
+<%= render 'shared/message' %>
+
+<div class="container">
+	<%= yield %>	
+</div>
 ```
 
 Create folder
