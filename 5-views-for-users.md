@@ -168,5 +168,11 @@
 **app/views/shared/_navbar.html.erb**
 
 ```ruby
+<%= current_user.email %>
+```
+
+change
+
+```ruby
 <%= current_user.fullname %>
 ```
