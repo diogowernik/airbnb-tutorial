@@ -31,12 +31,17 @@ rename to **application.scss** and add
 
     @import "bootstrap-sprockets";
     @import "bootstrap";
+    @import "toastr"
 
 **app/assets/javascripts/application.js**
 
 after //= require jquery
 
     //= require bootstrap-sprockets
+
+after //= require jquery_ujs
+
+    //= require toastr
 
 start server
 
