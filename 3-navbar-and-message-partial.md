@@ -19,18 +19,6 @@ Create folder
 
 add
 
-**_message.html.erb**
-
-```ruby
-<% unless flash.empty? %>
-	<script type="text/javascript">
-		<% flash.each do |f| %>
-			<% type = f[0].to_s.gsub('alert','error').gsub('notice','info') %>
-			toastr['<%= type %>']('<%= f[1] %>')
-		<% end %>
-	</script>
-<% end %>
-```
 
 **_navbar.html.erb**
 
@@ -82,4 +70,32 @@ add
     </div><!--/.nav-collapse -->
   </div>
 </nav>
+```
+
+#### Notifications
+
+**_message.html.erb**
+
+```ruby
+<% unless flash.empty? %>
+	<script type="text/javascript">
+		<% flash.each do |f| %>
+			<% type = f[0].to_s.gsub('alert','error').gsub('notice','info') %>
+			toastr['<%= type %>']('<%= f[1] %>')
+		<% end %>
+	</script>
+<% end %>
+```
+
+**_devisemes.html.erb**
+
+```ruby
+<% unless flash.empty? %>
+	<script type="text/javascript">
+		<% flash.each do |f| %>
+			<% type = f[0].to_s.gsub('alert','error').gsub('notice','info') %>
+			toastr['<%= type %>']('<%= f[1] %>')
+		<% end %>
+	</script>
+<% end %>
 ```
