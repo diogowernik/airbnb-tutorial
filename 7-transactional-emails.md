@@ -2,6 +2,8 @@
 
 Using Mandrill - go to mandrill.com , create an api key and config your account.
 
+With all set on mandrill.com set that!
+
 **config/enviromments/development.rb**
 
 find and change to true
@@ -26,6 +28,24 @@ config.action_mailer.raise_delivery_erros = true
     authentication: 'login'
   }
 ```
+
+teacher account for tests only
+
+```ruby
+config.action_mailer.raise_delivery_erros = true
+
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.smtp_settings = {
+    address: 'smtp.mandrillapp.com',
+    port: 587,
+    enable_starttls_auto: true,
+    user_name: 'demo.code4startup@gmail.com',
+    password: 'dTMBvxFipCqa5YvvqGkEtg',
+    authentication: 'login'
+  }
+```
+
+
 **config/initializers/devise.rb**
 
 find and change:
