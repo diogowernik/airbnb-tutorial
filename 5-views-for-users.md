@@ -12,7 +12,7 @@
     <h2>Log In</h2>
 
     <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
-      <%= devise_error_messages! %>
+      <%= render 'shared/devisemes' %>
 
       <div class="form-group">        
         <%= f.email_field :email, :class => 'form-control', :placeholder => 'Email' %>
@@ -48,7 +48,7 @@
     <h2>Sign up</h2>
 
     <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
-      <%= devise_error_messages! %>
+      <%= render 'shared/devisemes' %>
 
       <div class="form-group">        
         <%= f.text_field :fullname, :class => 'form-control', :placeholder => 'Full Name', autofocus: true %>
@@ -83,7 +83,7 @@
 	<h2>Forgot your password?</h2>
 
 	<%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f| %>
-	  <%= devise_error_messages! %>
+	  <%= render 'shared/devisemes' %>
 
 	  <div class="form-group">
 	    <%= f.email_field :email, autofocus: true, :class => "form-control", :placeholder => "Email" %>
@@ -105,7 +105,7 @@
   <h2>Change your password</h2>
 
   <%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :put }) do |f| %>
-    <%= devise_error_messages! %>
+    <%= render 'shared/devisemes' %>
     <%= f.hidden_field :reset_password_token %>
 
     <div class="form-group">
@@ -130,7 +130,7 @@
   <div class="col-md-6 col-md-offset-3 text-center">
   
     <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
-      <%= devise_error_messages! %>
+      <%= render 'shared/devisemes' %>
 
       <div class="form-group">
         <%= f.text_field :fullname, autofocus: true, :placeholder => "Full Name", :class => 'form-control' %>
