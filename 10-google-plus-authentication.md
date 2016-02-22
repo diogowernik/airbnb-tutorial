@@ -1,6 +1,5 @@
 ### 10 - Google Plus Authentication
 
-The challenge we have in this Sprint is "Create social authentication with Google". The process would be similar to what we have done with Facebook. I will give you some hints to guide you through steps but you have to do it yourself. Feel free to raise questions and discuss with other students in the Comments section.
 
 Step 1: Create Google app
 

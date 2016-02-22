@@ -40,10 +40,6 @@ around line 110 or Ctrl + F
   config.allow_unconfirmed_access_for = 20.days
 ```
 
-
-
-
-
 **app/models/user.rb**
 
 ```ruby
