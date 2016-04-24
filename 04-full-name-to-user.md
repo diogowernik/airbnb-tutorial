@@ -1,6 +1,14 @@
 ### 4 - Add Fullname to User
 
     rails g migration AddFullnameToUser
+
+
+**db/migrate/____add_fullname_to_user.rb**
+
+```ruby
+  add_column :users, :fullname, :string
+```
+
     rake db:migrate
 
 **app/model/user.rb**
@@ -20,3 +28,4 @@
   		devise_parameter_sanitizer.for(:account_update) << :fullname
   	end
 ```
+
