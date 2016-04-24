@@ -1,5 +1,8 @@
-rails g controller Pages home
+### 3 Navbar and message partials
 
+```
+rails g controller Pages home
+```
 
 **app/views/layouts/application.html.erb**
 
