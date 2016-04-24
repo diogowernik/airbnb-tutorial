@@ -1,6 +1,6 @@
 ### 4 - Add Fullname to User
 
-    g migration AddFullnameToUser
+    rails g migration AddFullnameToUser
     rake db:migrate
 
 **app/model/user.rb**
