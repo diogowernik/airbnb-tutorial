@@ -9,6 +9,8 @@
   add_column :users, :fullname, :string
 ```
 
+run rake
+
     rake db:migrate
 
 **app/model/user.rb**
