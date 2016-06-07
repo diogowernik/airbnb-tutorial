@@ -291,4 +291,17 @@ Gemfile
     gem 'private_pub'
     gem 'thin'
 
+**Terminal** 
+
+```
+bundle install
+rails g private_pub:install
+rackup private_pub.ru -s thin -E production
+```
+
+other terminal 
+
+```
+rails s
+```	
 
