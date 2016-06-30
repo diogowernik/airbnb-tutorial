@@ -1,34 +1,55 @@
-### 11 - Rooms
+### 12 - Photos
 
 
-1) Create Models
+1) install paperclip and imagemagick (linux)
 
 ```
-rails g model Room home_type:string room_type:string accommodate:integer bed_room:integer bath_room:integer listing_name:string summary:text address:string is_tv:boolean is_kitchen:boolean is_air:boolean is_heating:boolean is_internet:boolean price:decimal active:boolean user:references
+brew install imagemagick (mac)
 ```
 
-rake
-
-    rake db:migrate
-
-
-**models/user.rb**
+**Gemfile**
 
 ```ruby
-has_many :rooms
+gem 'paperclip'
 ```
 
-**models/room.rb**
+**Terminal**
 
 ```ruby
-	belongs_to :user
+bundle install
 ```
 
-2) Create Controller
+2) Models
 
-		rails g controller Rooms index show new create edit update
+**models/photo.rb**
 
-**controllers/rooms_controller.rb**
+```ruby
+class Photo < ActiveRecord::Base
+  belongs_to :room
+
+  has_attached_file :image, styles: { medium: "300x300>", thumb: "100x100>" }
+  validates_attachment_content_type :image, content_type: /\Aimage\/.*\Z/
+end
+```
+
+
+**models/rooms.rb**
+
+```ruby
+	has_many :photos
+```
+
+3) routes
+
+**config/routes.rb**
+
+```ruby
+	resources :photos
+```
+
+4) controllers
+
+**rooms controller.rb**
 
 ```ruby
 class RoomsController < ApplicationController
@@ -103,20 +124,15 @@ class RoomsController < ApplicationController
     end
 end
 
+
+
+
+
 ```
 
+5) views
 
-**config/routes.rb**
-
-```ruby
- resources :rooms
-```
-
-3) Views
-
-**views/rooms**
-
-**_form.html.erb**
+**rooms/_form**
 
 ```ruby
 <div class="panel panel-default">
@@ -254,67 +270,96 @@ end
 
 ```
 
-**new.erb**
+**photos/_list.html.erb**
 
 ```ruby
-<%= render 'form' %>
+<% if @photos %>
 
+	<div class="row">
+		<% @photos.each do |photo| %>		
+			<div class="col-md-4">
+				<div class="panel panel-default">
+				  <div class="panel-heading preview">
+				  	<%= image_tag photo.image.url() %>
+				  </div>
+				  <div class="panel-body">
+				  	<span class="pull-right">
+				  		<%= link_to photo, remote: true, method: :delete, data: {confirm: "Are you sure?"} do %>
+					  		<i class="fa fa-times fa-lg"></i>
+				  		<% end %>
+				  	</span>
+				  </div>
+				</div>
+			</div>
+		<% end %>			
+	</div>
+
+<% end %>
 ```
 
-**sylesheets/application.scss**
+6) styles
+
+**application.scss**
 
 ```css
-label {
-  color: #565a5c;
-  font-size: 1.1em;
-  font-weight: 500;
-  margin-bottom: 10px;
+.btn-file {
+    position: relative;
+    overflow: hidden;
 }
 
-select {
-  color: #565a5c;
-  background-color: #fff;
+.btn-file input[type=file] {
+    position: absolute;
+    top: 0;
+    right: 0;
+    min-width: 100%;
+    min-height: 100%;
+    font-size: 100px;
+    text-align: right;
+    filter: alpha(opacity=0);
+    opacity: 0;
+    outline: none;
+    background: white;
+    cursor: inherit;
+    display: block;
+}
+
+.panel-heading.preview {
+  padding: 0;
+}
+
+.panel-heading.preview img{  
   width: 100%;
-  border: 1px solid #ccc;
-  border-radius: 2px;
-  padding: 10px;
-  appearance: none;
-  -moz-appearance: none; /* Firefox */
-  -webkit-appearance: none; /* Safari and Chrome */
 }
+```
 
-.select:before {
-  content: '\25bc';
-  font-size: 1.2em;
-  position: absolute;  
-  color: #82888A;
-  top: 40px;  
-  right: 30px;
-  transform: scale(0.84, 0.42);
-}
+7) remove with ajax
 
-input[type="checkbox"] {
-  height: 1.25em;
-  width: 1.25em;
-  margin-bottom: -0.25em;
-  margin-right: 5px;
-  vertical-align: top;
-  border: 1px solid #c4c4c4;
-  border-radius: 2px;
-  appearance: none;
-  -moz-appearance: none; /* Firefox */
-  -webkit-appearance: none; /* Safari and Chrome */
-}
+**photos_controller.rb**
 
-input[type="checkbox"]:checked:before {
-  content: "\2713";
-  position: absolute;
-  font-size: 0.95em;
-  text-align: center;
-  width: 1.25em;
-  color: #ff5a5f;
-}
+```ruby
+class PhotosController < ApplicationController
 
+	def destroy
+		@photo = Photo.find(params[:id])
+		room = @photo.room
+
+		@photo.destroy
+		@photos = Photo.where(room_id: room.id)
+
+		respond_to :js
+	end
+end
+```
+
+**_list.erb**
+
+```ruby
+<%= link_to photo, remote: true, method: :delete, data: {confirm: "Are you sure?"} do %>
 
 ```
 
+**destroy.js.erb**
+
+```ruby
+$('#photos').html("<%= j render 'photos/list' %>")
+```
