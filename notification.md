@@ -81,7 +81,7 @@ json.array! @notifications do |notification|
   #json.notifiable do #notification.notifiable
     #json.type "a #{notification.notifiable.class.to_s.underscore.humanize.downcase}"
   #end
-  #json.url publication_path(notification.notifiable.publication, anchor: dom_id(notification.notifiable))
+  #json.url commentable_path(notification.notifiable.commentable, anchor: dom_id(notification.notifiable))
 end
 ```
 
@@ -98,7 +98,7 @@ view/notifications/users/_follow.html.erb
 view/notifications/comments/_commented.html.erb
 
 ```
-<%= link_to publication_path(notification.notifiable.publication, anchor: dom_id(notification.notifiable)), class: "dropdown-item #{"unread" if !notification.read_at?}" do %>
+<%= link_to commentable_path(notification.notifiable.commentable, anchor: dom_id(notification.notifiable)), class: "dropdown-item #{"unread" if !notification.read_at?}" do %>
   <%= notification.actor.username %>
   <%= notification.action %>
   a <%= notification.notifiable_type.underscore.humanize.downcase %>
