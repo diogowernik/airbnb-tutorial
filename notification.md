@@ -23,11 +23,11 @@ comments_controller.rb (to notification off comments)
 
     @comment.save
 
-    (@conversation.users.uniq - [current_user]).each do |user|
-      Notification.create(recipient: user, actor: current_user, action: "commented", notifiable: @message)
+    (@comentable.users.uniq - [current_user]).each do |user|
+      Notification.create(recipient: user, actor: current_user, action: "commented", notifiable: @comment)
     end
 
-conversation.rb
+publication.rb
 
     has_many :users, through: :comments
     
