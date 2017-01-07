@@ -23,11 +23,11 @@ comments_controller.rb (to notification off comments)
 
     @comment.save
 
-    (@comentable.users.uniq - [current_user]).each do |user|
-      Notification.create(recipient: user, actor: current_user, action: "commented", notifiable: @comment)
+    (@conversation.users.uniq - [current_user]).each do |user|
+      Notification.create(recipient: user, actor: current_user, action: "commented", notifiable: @message)
     end
 
-publications.rb
+conversation.rb
 
     has_many :users, through: :comments
     
@@ -56,17 +56,6 @@ notifications_controller.rb
       end
     end
 
-notification.rb
-
-    class Notification < ActiveRecord::Base
-      belongs_to :recipient, class_name: "User"
-      belongs_to :actor, class_name: "User"
-      belongs_to :notifiable, polymorphic: true
-      
-      scope :unread, ->{ where(read_at: nil) }
-      scope :recent, ->{ order(created_at: :desc).limit(5) }
-    end
-
 view/notifications/index.json.jbuilder
 
 ```
@@ -74,15 +63,6 @@ json.array! @notifications do |notification|
   json.id notification.id
   json.unread !notification.read_at?
   json.template render partial: "notifications/#{notification.notifiable_type.underscore.pluralize}/#{notification.action}", locals: {notification: notification}, formats: [:html]
-
-  #json.recipient notification.recipient
-  #json.actor notification.actor.username
-  #json.action notification.action
-  #json.notifiable do #notification.notifiable
-    #json.type "a #{notification.notifiable.class.to_s.underscore.humanize.downcase}"
-  #end
-  #json.url commentable_path(notification.notifiable.commentable, anchor: dom_id(notification.notifiable))
-end
 ```
 
 view/notifications/users/_follow.html.erb
